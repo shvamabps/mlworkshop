@@ -34,21 +34,21 @@ from cvzone.HandTrackingModule import HandDetector
 cap = cv2.VideoCapture(0)
 
 
-def detectHand(image, draw=False):
+def detectHand(image):
     detector = HandDetector(maxHands=1)
-    hand = detector.findHands(image, draw=draw)
+    hand = detector.findHands(image, draw=False)
+    totalFinger = None
     if hand:
         lmList = hand[0]
         totalFinger = detector.fingersUp(lmList)
-        return totalFinger
+    return totalFinger
 
 
-def liveDetector(click=True):
-    while click:
+def liveDetector():
+    while True:
         status, photo = cap.read()
 
         cv2.imshow("my photo", photo)
-
         detection = detectHand(photo)
 
         if detection != None:
@@ -59,6 +59,3 @@ def liveDetector(click=True):
 
     cv2.destroyAllWindows()
     cap.release()
-
-
-liveDetector()

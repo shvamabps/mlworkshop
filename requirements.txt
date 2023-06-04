@@ -8,3 +8,5 @@ pillow
 jupyterlab
 boto3
 opencv-python
+cvzone
+mediapipe

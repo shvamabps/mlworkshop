@@ -39,10 +39,16 @@ def launchEC2Instance():
 
 # Remove EC2 instances
 def removeEC2Instance():
-    osremove = allOs.pop()  # remove the last element from the list
-    ec2.instances.filter(InstanceIds=[osremove]).terminate()  # terminate ec2 instance
-    print(f"Instance Id deleted: {osremove}", end="\n")
-    print(f"Total number of os: {len(allOs)}", end="\n")
+    if len(allOs) > 0:
+        osremove = allOs.pop()  # remove the last element from the list
+        ec2.instances.filter(
+            InstanceIds=[osremove]
+        ).terminate()  # terminate ec2 instance
+        print(f"Instance Id deleted: {osremove}", end="\n")
+        print(f"Total number of instances left: {len(allOs)}", end="\n")
+    else:
+        print("No instances are currently running.")
+    return
 
 
 # Detect hand
@@ -61,6 +67,8 @@ def detectHand(image, draw=False):
         else:
             print("No fingers detected.", end="\n")
         return totalFinger
+    print("No hand detected.")
+    return
 
 
 # live stream based detection
